@@ -1,0 +1,13 @@
+#!/bin/bash
+#Wrapper to enable remote infinishell execution
+#InfiniBox credentials and IP are defined on the proxy host in ~/.infinidat/infinishell/infinishellrc
+IBox=ibox2811
+Proxy=gtouretsky@gtouret-k51
+Cmd=$@
+FILE=/tmp/IbOxFiLeTmP
+
+echo $Cmd > $FILE
+
+echo Executing $Cmd on $IBox...
+/usr/bin/scp -i ~/.ssh/id_rsa $FILE $Proxy:$FILE > /dev/null 2>&1
+/usr/bin/ssh -i ~/.ssh/id_rsa -q $Proxy /usr/bin/infinishell -f $FILE $IBox
